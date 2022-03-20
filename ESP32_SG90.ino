@@ -77,7 +77,7 @@ void loop() {
 }
 
 void rotate() {
-  //讀取按鈕狀態
+  
   buttonState = digitalRead(buttonPin);
  
   if (buttonState == HIGH,pos=0,pos<=180) {
