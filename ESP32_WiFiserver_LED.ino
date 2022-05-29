@@ -1,12 +1,3 @@
-/*********
-  Rui Santos
-  Complete project details at http://randomnerdtutorials.com  
-*********/
-//
-// ESP32 Webserver to control GPIOs
-//
-
-// Load Wi-Fi library
 #include <WiFi.h>
 
 // Replace with your network credentials
@@ -20,11 +11,11 @@ WiFiServer server(80);
 String header;
 
 // Auxiliar variables to store the current output state
-String output26State = "off";
+String output2State = "off";
 String output27State = "off";
 
 // Assign output variables to GPIO pins
-const int output26 = 26;
+const int output2 = 2;
 const int output27 = 27;
 
 // Current time
@@ -37,10 +28,10 @@ const long timeoutTime = 2000;
 void setup() {
   Serial.begin(115200);
   // Initialize the output variables as outputs
-  pinMode(output26, OUTPUT);
+  pinMode(output2, OUTPUT);
   pinMode(output27, OUTPUT);
   // Set outputs to LOW
-  digitalWrite(output26, LOW);
+  digitalWrite(output2, LOW);
   digitalWrite(output27, LOW);
 
   // Connect to Wi-Fi network with SSID and password
@@ -85,14 +76,14 @@ void loop(){
             client.println();
             
             // turns the GPIOs on and off
-            if (header.indexOf("GET /26/on") >= 0) {
-              Serial.println("GPIO 26 on");
-              output26State = "on";
-              digitalWrite(output26, HIGH);
-            } else if (header.indexOf("GET /26/off") >= 0) {
-              Serial.println("GPIO 26 off");
-              output26State = "off";
-              digitalWrite(output26, LOW);
+            if (header.indexOf("GET /2/on") >= 0) {
+              Serial.println("GPIO 2 on");
+              output2State = "on";
+              digitalWrite(output2, HIGH);
+            } else if (header.indexOf("GET /2/off") >= 0) {
+              Serial.println("GPIO 2 off");
+              output2State = "off";
+              digitalWrite(output2, LOW);
             } else if (header.indexOf("GET /27/on") >= 0) {
               Serial.println("GPIO 27 on");
               output27State = "on";
@@ -118,12 +109,12 @@ void loop(){
             client.println("<body><h1>ESP32 Web Server</h1>");
             
             // Display current state, and ON/OFF buttons for GPIO 26  
-            client.println("<p>GPIO 26 - State " + output26State + "</p>");
-            // If the output26State is off, it displays the ON button       
-            if (output26State=="off") {
-              client.println("<p><a href=\"/26/on\"><button class=\"button\">ON</button></a></p>");
+            client.println("<p>GPIO 2 - State " + output2State + "</p>");
+            // If the output2State is off, it displays the ON button       
+            if (output2State=="off") {
+              client.println("<p><a href=\"/2/on\"><button class=\"button\">ON</button></a></p>");
             } else {
-              client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
+              client.println("<p><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
             } 
                
             // Display current state, and ON/OFF buttons for GPIO 27  
