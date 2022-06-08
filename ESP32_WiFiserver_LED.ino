@@ -12,11 +12,10 @@ String header;
 
 // Auxiliar variables to store the current output state
 String output2State = "off";
-String output27State = "off";
 
 // Assign output variables to GPIO pins
 const int output2 = 2;
-const int output27 = 27;
+
 
 // Current time
 unsigned long currentTime = millis();
@@ -29,10 +28,10 @@ void setup() {
   Serial.begin(115200);
   // Initialize the output variables as outputs
   pinMode(output2, OUTPUT);
-  pinMode(output27, OUTPUT);
+ 
   // Set outputs to LOW
   digitalWrite(output2, LOW);
-  digitalWrite(output27, LOW);
+
 
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
@@ -84,14 +83,6 @@ void loop(){
               Serial.println("GPIO 2 off");
               output2State = "off";
               digitalWrite(output2, LOW);
-            } else if (header.indexOf("GET /27/on") >= 0) {
-              Serial.println("GPIO 27 on");
-              output27State = "on";
-              digitalWrite(output27, HIGH);
-            } else if (header.indexOf("GET /27/off") >= 0) {
-              Serial.println("GPIO 27 off");
-              output27State = "off";
-              digitalWrite(output27, LOW);
             }
             
             // Display the HTML web page
@@ -108,7 +99,7 @@ void loop(){
             // Web Page Heading
             client.println("<body><h1>ESP32 Web Server</h1>");
             
-            // Display current state, and ON/OFF buttons for GPIO 26  
+           
             client.println("<p>GPIO 2 - State " + output2State + "</p>");
             // If the output2State is off, it displays the ON button       
             if (output2State=="off") {
@@ -117,14 +108,7 @@ void loop(){
               client.println("<p><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
             } 
                
-            // Display current state, and ON/OFF buttons for GPIO 27  
-            client.println("<p>GPIO 27 - State " + output27State + "</p>");
-            // If the output27State is off, it displays the ON button       
-            if (output27State=="off") {
-              client.println("<p><a href=\"/27/on\"><button class=\"button\">ON</button></a></p>");
-            } else {
-              client.println("<p><a href=\"/27/off\"><button class=\"button button2\">OFF</button></a></p>");
-            }
+           
             client.println("</body></html>");
             
             // The HTTP response ends with another blank line
