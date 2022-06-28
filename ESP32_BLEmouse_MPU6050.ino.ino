@@ -12,7 +12,7 @@ int buttonL = 0; // IO0 button為左鍵
 
 int buttonLstate = HIGH; 
 
-//提高滑鼠游標精確度
+//計算角距離
 int angleToDistance(int a)
 
 {
