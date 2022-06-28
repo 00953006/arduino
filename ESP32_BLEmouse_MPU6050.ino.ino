@@ -3,15 +3,16 @@
 #include <MPU6050.h>
 #include <BleMouse.h>
 
+//宣告各項變數
 BleMouse bleMouse;
 MPU6050 imu;
-int16_t ax, ay, az, gx, gy, gz;
-int vx, vy;
+int16_t ax, ay, az, gx, gy, gz;//MPU6050加速度和旋轉
+int vx, vy;//滑鼠游標移動
 int buttonL = 0; // IO0 button為左鍵
 
 int buttonLstate = HIGH; 
 
-//提高屬標精確度
+//提高滑鼠游標精確度
 int angleToDistance(int a)
 
 {
@@ -64,7 +65,7 @@ void loop() {
   /* Update IMU sensor values */
   imu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);//取得Acceleration & Rotation
   
-  //求出vx & vy
+  //求出vx & vy，計算出滑鼠游標的移動
   int vx = map(ax, -16000, 16000, 90, -90);
 
   int vy = map(ay, -16000, 16000, 90, -90);
@@ -76,7 +77,7 @@ void loop() {
   Serial.print("X = ");    Serial.print(vx);
   Serial.print(", Y = ");  Serial.println(vy);
   
-  bleMouse.move(angleToDistance(vx), angleToDistance(vy));//決定屬標移動方向
+  bleMouse.move(angleToDistance(vx), angleToDistance(vy));//決定滑鼠游標更精準的標移動方向
     
   buttonLstate = digitalRead(buttonL);
    
